@@ -1,28 +1,84 @@
+<div align="center">
+
 # 🌟 Monkey Maze Game 🐒
 
-A playful, interactive browser-based maze game! Help the happy little monkey navigate through dynamically generated mazes to reach the delicious banana, complete with confetti celebrations on victory!
+**Help the happy little monkey navigate through procedural mazes to find the banana!**
+
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Vite](https://img.shields.io/badge/Vite-Bundler-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![HTML5](https://img.shields.io/badge/HTML5-Game-E34F26?logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+<br/>
+
+<!-- Gameplay GIF Preview -->
+<img src="./demo.gif" alt="Monkey Maze Gameplay Demo" width="750" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);"/>
+
+</div>
+
+---
+
+## 🎮 How to Play
+
+1. **Objective**: Guide the monkey 🐒 from the top-left corner through the winding maze to reach the banana 🍌 at the bottom-right corner!
+2. **Controls**:
+   - 👆 **Touch & Mouse Drag**: Click/touch the monkey and drag your finger or cursor along open pathways to carve your trail.
+   - 🕹️ **On-Screen D-Pad**: Tap ⬆️, ⬇️, ⬅️, or ➡️ to move one cell at a time.
+3. **Smart Path Management**:
+   - Moving backward along your existing path automatically erases the previous step.
+   - Tapping an earlier cell on your path rolls back to that exact point.
+4. **Win Condition**: Reaching the banana launches a celebration confetti shower 🎉 and unlocks the "Play Again" modal!
 
 ---
 
 ## ✨ Features
 
-- **Procedural Maze Generation**: Uses the Recursive Backtracker algorithm to generate fresh, unique mazes every round.
-- **Dual Controls**:
-  - **Touch & Mouse Tracing**: Draw paths directly onto the maze grid with your finger or mouse. Backtracking smoothly erases the path.
-  - **On-Screen D-Pad**: Tap directional arrow buttons (⬆️ ⬇️ ⬅️ ➡️) for step-by-step navigation.
-- **Victory Celebration**: Confetti animation powered by `canvas-confetti` when the monkey reaches the goal.
-- **Game Controls**: "Restart" current maze or generate a "New Maze" at any time.
-- **Responsive Design**: Designed to play smoothly on both desktop and mobile devices.
+- **Procedural Maze Generation**: Every single maze is unique, generated on-the-fly using the **Recursive Backtracker** algorithm.
+- **Dual Input Support**: Full touch/swipe gesture support for mobile devices plus click/drag and D-pad controls for desktop.
+- **Smooth Backtracking**: Move in reverse or click on an earlier part of your path to easily backtrack without restarting.
+- **Instant Controls**:
+  - **Restart 🔄**: Clears your drawn path to try the current maze again.
+  - **New Maze ✨**: Generates a brand-new maze layout instantly.
+- **Victory Confetti**: Celebratory particle effects powered by `canvas-confetti`.
+
+---
+
+## 🧠 Under the Hood
+
+### Recursive Backtracker Algorithm
+The maze is dynamically generated as a $28 \times 11$ grid:
+1. Start at cell `(0, 0)` and mark it as visited.
+2. While there are unvisited cells:
+   - If the current cell has unvisited neighbors, pick one randomly, remove the walls between them, and push the current cell to the stack.
+   - If no unvisited neighbors exist, backtrack by popping a cell from the stack.
+3. This guarantees a **perfect maze** (a maze with no loops and exactly one unique solution path between any two points).
+
+### Touch & Drag Mechanics
+Using `document.elementFromPoint(clientX, clientY)`, the game accurately detects which grid cell the user is dragging across in real time on mobile touchscreens without relying on standard mouse enter/leave listeners.
+
+---
+
+## 📂 Project Structure
+
+```text
+├── index.html         # Main game layout and markup
+├── main.js            # Maze generation algorithm, drawing logic & event handlers
+├── style.css          # Game board styles, playful UI & animations
+├── image.png          # Forest background artwork
+├── demo.gif           # Gameplay animation demo
+├── public/            # Static assets (favicons, SVG icons)
+├── package.json       # Dependencies and build scripts
+└── README.md          # Documentation
+```
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+- [Node.js](https://nodejs.org/) (version 18+ recommended)
 
-Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
-
-### Installation
+### Run Locally
 
 1. Clone the repository:
    ```bash
@@ -35,7 +91,7 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
    npm install
    ```
 
-3. Start the development server:
+3. Launch development server:
    ```bash
    npm run dev
    ```
@@ -44,9 +100,6 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
 ---
 
-## 🛠️ Built With
+## 📄 License
 
-- **HTML5 & CSS3** — Responsive layout, custom styling, and grid-based maze rendering.
-- **Vanilla JavaScript** — Maze generation algorithms, touch & mouse drawing, and game state management.
-- **Vite** — Fast, lightweight local development server and bundler.
-- **canvas-confetti** — Celebration effects on completing the maze.
+This project is open source and available under the [MIT License](LICENSE).
