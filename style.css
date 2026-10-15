@@ -1,0 +1,293 @@
+:root {
+  --bg-color: #ecfccb;
+  --text-color: #14532d;
+  --primary: #fde047;
+  --primary-shadow: #eab308;
+  --secondary: #d9f99d;
+  --wall-color: #713f12;
+  --path-color: #fef08a;
+  --cell-size: min(60px, calc((100vw - 80px) / 28), calc((100vh - 300px) / 11));
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none; /* Prevent text selection while swiping */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-image: url('./image.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.header {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1.5rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  animation: float 3s ease-in-out infinite;
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #166534;
+  text-shadow: 2px 2px 0px #fff;
+  margin-bottom: 0.2rem;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+}
+
+.maze {
+  display: grid;
+  background: var(--wall-color);
+  gap: 0px;
+  border: 12px solid var(--wall-color);
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  overflow: hidden;
+  touch-action: none;
+  justify-content: center;
+  align-content: center;
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background: white;
+  position: relative;
+  transition: background-color 0.15s ease;
+}
+
+/* Walls are rendered by setting borders */
+.cell.wall-top { border-top: 4px solid var(--wall-color); }
+.cell.wall-right { border-right: 4px solid var(--wall-color); }
+.cell.wall-bottom { border-bottom: 4px solid var(--wall-color); }
+.cell.wall-left { border-left: 4px solid var(--wall-color); }
+
+.cell.path {
+  background: var(--path-color);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cell.start {
+  /* Start indicator if needed */
+}
+
+.cell.end::after {
+  content: '🍌';
+  font-size: calc(var(--cell-size) * 0.85);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  animation: bounce 1s infinite alternate;
+}
+
+.cell.current::after {
+  content: '🐒';
+  font-size: calc(var(--cell-size) * 0.85);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+}
+
+.bottom-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.btn {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: white;
+  color: #166534;
+  box-shadow: 0 6px 0 #86efac, 0 10px 15px rgba(0,0,0,0.1);
+  transition: all 0.1s ease;
+}
+
+.btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 0px 0 #86efac, 0 4px 5px rgba(0,0,0,0.1);
+}
+
+.btn.primary {
+  background: #fde047;
+  color: #854d0e;
+  box-shadow: 0 6px 0 #eab308, 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.btn.primary:active {
+  box-shadow: 0 0px 0 #eab308, 0 4px 5px rgba(0,0,0,0.1);
+}
+
+.d-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  touch-action: none;
+}
+
+.d-pad-row {
+  display: flex;
+  gap: 5px;
+}
+
+.d-btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  font-size: 24px;
+  border: none;
+  background: white;
+  color: #166534;
+  box-shadow: 0 6px 0 #86efac, 0 10px 15px rgba(0,0,0,0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.1s ease;
+}
+
+.d-btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 0px 0 #86efac, 0 4px 5px rgba(0,0,0,0.1);
+}
+
+.modal {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal.hidden .modal-content {
+  transform: scale(0.5);
+}
+
+.modal-content h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3rem;
+  color: #166534;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  font-size: 1.5rem;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.emojis {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  animation: pulse 1s infinite alternate;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 500px) {
+  :root {
+    --cell-size: 20px;
+  }
+  h1 { font-size: 2rem; }
+  .modal-content { padding: 2rem; }
+  .modal-content h2 { font-size: 2.2rem; }
+}

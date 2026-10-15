@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Magical Maze Game!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <h1>🌟 Monkey Maze 🌟</h1>
+      <p>Help the monkey find the banana! Draw the path with your finger or use the arrows.</p>
+    </div>
+
+    <div class="game-container">
+      <div id="maze" class="maze"></div>
+    </div>
+
+    <div class="bottom-panel">
+      <div class="controls">
+        <button id="reset-btn" class="btn">Restart 🔄</button>
+        <button id="new-btn" class="btn primary">New Maze ✨</button>
+      </div>
+
+      <div class="d-pad">
+        <div class="d-pad-row">
+          <button id="btn-up" class="d-btn">⬆️</button>
+        </div>
+        <div class="d-pad-row">
+          <button id="btn-left" class="d-btn">⬅️</button>
+          <button id="btn-down" class="d-btn">⬇️</button>
+          <button id="btn-right" class="d-btn">➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="win-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>🎉 You Did It! 🎉</h2>
+        <p>The monkey is so happy!</p>
+        <div class="emojis">🐒 ❤️ 🍌</div>
+        <button id="play-again-btn" class="btn primary">Play Again!</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+
+</html>
